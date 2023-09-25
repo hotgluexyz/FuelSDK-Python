@@ -196,6 +196,10 @@ class ET_Get(ET_Constructor):
                     for k, v in value.items():
                         ws_retrieveRequest.Options[key][k] = v
                 else:
+                    # Init as empty dict if not init yet
+                    if ws_retrieveRequest.Options is None:
+                        ws_retrieveRequest.Options = dict()
+
                     ws_retrieveRequest.Options[key] = value
 
         ws_retrieveRequest.ObjectType = obj_type
