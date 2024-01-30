@@ -152,6 +152,7 @@ class ET_Get(ET_Constructor):
                     props.append(prop.Name) 
 
         ws_retrieveRequest = auth_stub.soap_client.factory.create('RetrieveRequest')
+        ws_retrieveRequest.QueryAllAccounts = True
                 
         if props is not None:
             if type(props) is dict: # If the properties is a hash, then we just want to use the keys
@@ -191,15 +192,14 @@ class ET_Get(ET_Constructor):
                 ws_retrieveRequest.Filter = ws_simpleFilterPart
 
         if options is not None:
+            # Init as empty dict if not init yet
+            if ws_retrieveRequest.Options is None:
+                 ws_retrieveRequest.Options = options
             for key, value in options.items():
                 if isinstance(value, dict):
                     for k, v in value.items():
                         ws_retrieveRequest.Options[key][k] = v
                 else:
-                    # Init as empty dict if not init yet
-                    if ws_retrieveRequest.Options is None:
-                        ws_retrieveRequest.Options = dict()
-
                     ws_retrieveRequest.Options[key] = value
 
         ws_retrieveRequest.ObjectType = obj_type
