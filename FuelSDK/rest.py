@@ -141,7 +141,7 @@ class ET_Configure(ET_Constructor):
 ##
 ########
 class ET_Get(ET_Constructor):
-    def __init__(self, auth_stub, obj_type, props = None, search_filter = None, options = None):        
+    def __init__(self, auth_stub, obj_type, props = None, search_filter = None, options = None, parent_mid=None):        
         auth_stub.refresh_token()
         
         if props is None:   #if there are no properties to retrieve for the obj_type then return a Description of obj_type
@@ -153,6 +153,9 @@ class ET_Get(ET_Constructor):
 
         ws_retrieveRequest = auth_stub.soap_client.factory.create('RetrieveRequest')
         ws_retrieveRequest.QueryAllAccounts = True
+
+        if parent_mid:
+            ws_retrieveRequest.ClientIDs = [{'ID': parent_mid}]
                 
         if props is not None:
             if type(props) is dict: # If the properties is a hash, then we just want to use the keys
