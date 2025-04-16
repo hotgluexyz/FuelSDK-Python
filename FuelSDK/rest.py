@@ -152,7 +152,6 @@ class ET_Get(ET_Constructor):
                     props.append(prop.Name) 
 
         ws_retrieveRequest = auth_stub.soap_client.factory.create('RetrieveRequest')
-        ws_retrieveRequest.QueryAllAccounts = True
 
         if parent_mid:
             ws_retrieveRequest.ClientIDs = [{'ID': parent_mid}]
